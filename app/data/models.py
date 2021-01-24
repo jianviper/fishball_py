@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#coding:utf-8
+# coding:utf-8
 from sqlalchemy import Column, ForeignKey, Integer, Boolean, VARCHAR, DateTime
 from sqlalchemy.orm import relationships
 from .database import Base
@@ -48,8 +48,8 @@ class Task(Base):
     def __repr__(self):
         return "<Task(id=%s,iter_id=%s,iter_name=%s,member_id=%s,member_name=%s,task=%s,task_date=%s,target_num=%s," \
                "get_num=%s,is_delete=%s)>" % (
-               self.task_id, self.iter_id, self.iter_name, self.member_id, self.member_name, self.task_detail,
-               self.task_date, self.target_num, self.get_num, self.is_delete)
+                   self.task_id, self.iter_id, self.iter_name, self.member_id, self.member_name, self.task_detail,
+                   self.task_date, self.target_num, self.get_num, self.is_delete)
 
 
 class Member(Base):

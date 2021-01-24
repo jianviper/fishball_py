@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#coding:utf-8
+# coding:utf-8
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,7 +9,7 @@ from app.routers import iteration, member, task
 def create_app():
     app = FastAPI()
 
-    #导入路由
+    # 导入路由
     app.include_router(member.router, prefix='/api')
     app.include_router(iteration.router, prefix='/api')
     app.include_router(task.router, prefix='/api')
@@ -23,7 +23,7 @@ def create_app():
                "http://0.0.0.0:8080",
                ]
 
-    #允许跨域
+    # 允许跨域
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

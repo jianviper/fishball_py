@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#coding:utf-8
+# coding:utf-8
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from app.data.models import Member
