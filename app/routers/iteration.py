@@ -21,7 +21,7 @@ class IterData(BaseModel):
     end_date: datetime
     status: int = 0
     detail: str
-    number: int = 0
+    number: int = None
     is_delete: int = 0
 
 

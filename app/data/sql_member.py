@@ -28,7 +28,7 @@ def sql_add_member(m_data):
 
 def sql_update_member(m_data: dict):
     try:
-        data = db.query(Member).filter(and_(Member.m_id == m_data['m_id'], Member.is_delete == 0))
+        data = db.query(Member).filter(and_(Member.member_id == m_data['member_id'], Member.is_delete == 0))
         r = data.first()
         data.update(m_data)
         db.commit()
@@ -36,9 +36,10 @@ def sql_update_member(m_data: dict):
         db.close()
 
 
-def sql_delete_member(m_id):
+def sql_delete_member(member_id):
     try:
-        data = db.query(Member).filter(and_(Member.m_id == m_id, Member.is_delete == 0)).update({'is_delete': 1})
+        data = db.query(Member).filter(and_(Member.member_id == member_id, Member.is_delete == 0)).update(
+            {'is_delete': 1})
         db.commit()
     finally:
         db.close()

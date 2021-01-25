@@ -16,7 +16,7 @@ async def get_member():
 
 
 class MemberData(BaseModel):
-    m_id: int = None
+    member_id: int = None
     name: str
     job: str
     is_delete: int = 0
@@ -35,6 +35,6 @@ async def update_member(m_data: MemberData):
 
 
 @router.delete('/delete_member')
-async def delete_member(m_id):
-    sql_delete_member(m_id)
+async def delete_member(member_id):
+    sql_delete_member(member_id)
     return {'code': 200}

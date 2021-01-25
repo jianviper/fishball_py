@@ -31,12 +31,14 @@ class Task(Base):
     task_id = Column(Integer, primary_key=True)
     iter_id = Column(Integer, ForeignKey('fish_iters.iter_id'))
     iter_name = Column(VARCHAR(255))
-    member_id = Column(Integer, ForeignKey('fish_member.m_id'))
+    member_id = Column(Integer, ForeignKey('fish_member.member_id'))
     member_name = Column(VARCHAR(255))
     task_detail = Column(VARCHAR(255))
     task_date = Column(DateTime)
     target_num = Column(Integer)
     get_num = Column(Integer)
+    mark = Column(VARCHAR(255))
+    status = Column(Integer)
     is_delete = Column(Integer)
 
     def to_json(self):
@@ -47,14 +49,14 @@ class Task(Base):
 
     def __repr__(self):
         return "<Task(id=%s,iter_id=%s,iter_name=%s,member_id=%s,member_name=%s,task=%s,task_date=%s,target_num=%s," \
-               "get_num=%s,is_delete=%s)>" % (
+               "get_num=%s,mark=%s,status=%s,is_delete=%s)>" % (
                    self.task_id, self.iter_id, self.iter_name, self.member_id, self.member_name, self.task_detail,
-                   self.task_date, self.target_num, self.get_num, self.is_delete)
+                   self.task_date, self.target_num, self.get_num, self.mark, self.status, self.is_delete)
 
 
 class Member(Base):
     __tablename__ = 'fish_member'
-    m_id = Column(Integer, primary_key=True)
+    member_id = Column(Integer, primary_key=True)
     name = Column(VARCHAR(255))
     job = Column(VARCHAR(255))
     number = Column(Integer)
@@ -62,7 +64,7 @@ class Member(Base):
 
     def __repr__(self):
         return "<Member(id=%s,name=%s,job=%s,number=%s,is_delete=%s)>" % (
-            self.m_id, self.name, self.job, self.number, self.is_delete)
+            self.member_id, self.name, self.job, self.number, self.is_delete)
 
 
 class Ball_detial(Base):
