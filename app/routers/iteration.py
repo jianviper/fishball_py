@@ -30,7 +30,7 @@ async def add_iter(iter_data: IterData):
     print(iter_data)
     sql_add_iter(iter_data)
     iter_list = sql_get_iter()
-    return iter_list
+    return {'code': 200, 'data': iter_list}
 
 
 @router.post('/update_iter')
@@ -47,3 +47,15 @@ async def update_iter(iter_data: IterData):
 async def delete_iter(iter_id):
     sql_delete_iter(iter_id)
     return {'code': 200}
+
+
+@router.get('/iter_member')
+async def get_iter_member(iter_id: int):
+    data = sql_get_iter_member(iter_id)
+    return data
+
+
+@router.get('/iter_member_detail')
+async def get_iter_member_detail(iter_id: int, member_id: int):
+    data = sql_get_iter_member_detail(iter_id, member_id)
+    return {'code': 200, 'data': data}

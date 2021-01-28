@@ -4,7 +4,6 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from app.data.sql_task import *
-from app.data.sql_iter import sql_get_iter
 
 router = APIRouter()
 
@@ -53,6 +52,7 @@ async def delete_task(task_id):
 
 
 @router.get('/complete_task')
-async def complete_task(task_id: int, status: int):
-    sql_complete_task(task_id, status)
-    return {'code': 200}
+async def complete_task(task_id: int, status: int, member_id: int):
+    print(task_id, status, member_id)
+    data = sql_complete_task(task_id, status, member_id)
+    return {'code': 200, 'data': data}

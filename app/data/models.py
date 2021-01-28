@@ -67,14 +67,26 @@ class Member(Base):
             self.member_id, self.name, self.job, self.number, self.is_delete)
 
 
-class Ball_detial(Base):
-    __tablename__ = 'fish_ball_detail'
+class Iter_member(Base):
+    __tablename__ = 'fish_iter_member'
     ball_id = Column(Integer, primary_key=True)
     iter_id = Column(Integer, ForeignKey('fish_iters.id'))
-    task_id = Column(Integer, ForeignKey('fish_task.id'))
     member_id = Column(Integer, ForeignKey('fish_member.id'))
     number = Column(Integer)
 
     def __repr__(self):
-        return "<Ball_detail(id=%s,iter_id=%s,task_id=%s,member=%s,number=%s)>" % (
-            self.ball_id, self.iter_id, self.task_id, self.member_id, self.number)
+        return "<Ball_detail(id=%s,iter_id=%s,member=%s,number=%s)>" % (
+            self.ball_id, self.iter_id, self.member_id, self.number)
+
+
+class User(Base):
+    __tablename__ = 'fish_user'
+    user_id = Column(Integer, primary_key=True)
+    username = Column(VARCHAR(255))
+    password = Column(VARCHAR(255))
+    status = Column(Integer)
+    role = Column(Integer)
+
+    def __repr__(self):
+        return '<User(user_id=%s,username=%s,password=%s,status=%s,role=%s)>' % (
+            self.user_id, self.username, self.password, self.status, self.role)

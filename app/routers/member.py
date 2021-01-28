@@ -38,3 +38,9 @@ async def update_member(m_data: MemberData):
 async def delete_member(member_id):
     sql_delete_member(member_id)
     return {'code': 200}
+
+
+@router.get('/member_ball_detail')
+async def get_member_ball_detail(member_id: int, iter_id: int):
+    data = sql_get_member_ball_detail(member_id, iter_id)
+    return {'code': 200, 'data': data}

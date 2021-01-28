@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 from sqlalchemy.orm import Session
-from sqlalchemy import and_
+from sqlalchemy import and_, func
 from app.data.models import Task
 from datetime import datetime
 from app.data.database import create_db
@@ -51,12 +51,38 @@ def sql_delete_task(task_id):
         db.close()
 
 
-def sql_complete_task(task_id, status):
+def sql_complete_task(task_id, status, member_id):
     try:
-        data = db.query(Task).filter(Task.task_id == task_id)
-        data.update({'status': status})
+        query = db.query(Task).filter(Task.task_id == task_id)
+        target_num = 0
+        iter_id = query.first().iter_id
+        if status == 1:
+            target_num = query.first().target_num
+        query.update({'status': status, 'get_num': target_num})
+        update_iter_num(iter_id)  #更新迭代鱼丸总数
+        update_member_num(member_id)  #更新用户鱼丸总数
         db.commit()
+        return sql_get_task()
     except BaseException as e:
         print(e)
     finally:
         db.close()
+
+
+def update_iter_num(iter_id):
+    from app.data.models import Iters
+    iter_query = db.query(Iters).filter(Iters.iter_id == iter_id)
+    num = db.query(func.sum(Task.get_num)).filter(Task.iter_id == iter_id).scalar()
+    iter_query.update({'number': num})
+
+
+def update_member_num(member_id):
+    from app.data.models import Member
+    query = db.query(Member).filter(Member.member_id == member_id)
+    num = db.query(func.sum(Task.get_num)).filter(Task.member_id == member_id).scalar()
+    query.update({'number': num})
+
+
+if __name__ == '__main__':
+    # sql_complete_task(8, 1)
+    update_iter_num(4)
