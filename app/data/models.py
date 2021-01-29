@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 # coding:utf-8
-from sqlalchemy import Column, ForeignKey, Integer, Boolean, VARCHAR, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, Boolean, VARCHAR, DateTime, DATE
 from sqlalchemy.orm import relationships
 from .database import Base
+from datetime import datetime
 
 
 class Iters(Base):
     __tablename__ = 'fish_iters'
     iter_id = Column(Integer, primary_key=True)
     name = Column(VARCHAR(255))
-    start_date = Column(DateTime)
-    end_date = Column(DateTime)
+    start_date = Column(DATE)
+    end_date = Column(DATE)
     status = Column(Integer)
     number = Column(Integer)
     detail = Column(VARCHAR(255))
@@ -34,7 +35,7 @@ class Task(Base):
     member_id = Column(Integer, ForeignKey('fish_member.member_id'))
     member_name = Column(VARCHAR(255))
     task_detail = Column(VARCHAR(255))
-    task_date = Column(DateTime)
+    task_date = Column(DATE)
     target_num = Column(Integer)
     get_num = Column(Integer)
     mark = Column(VARCHAR(255))
@@ -48,7 +49,8 @@ class Task(Base):
             return dict
 
     def __repr__(self):
-        return "<Task(id=%s,iter_id=%s,iter_name=%s,member_id=%s,member_name=%s,task=%s,task_date=%s,target_num=%s," \
+        return "<Task(id=%s,iter_id=%s,iter_name=%s,member_id=%s,member_name=%s,task_detail=%s,task_date=%s," \
+               "target_num=%s," \
                "get_num=%s,mark=%s,status=%s,is_delete=%s)>" % (
                    self.task_id, self.iter_id, self.iter_name, self.member_id, self.member_name, self.task_detail,
                    self.task_date, self.target_num, self.get_num, self.mark, self.status, self.is_delete)

@@ -17,11 +17,11 @@ async def get_iter_list():
 class IterData(BaseModel):
     iter_id: int = None
     name: str
-    start_date: datetime
-    end_date: datetime
+    start_date: str
+    end_date: str
     status: int = 0
     detail: str
-    number: int = None
+    number: int = 0
     is_delete: int = 0
 
 
@@ -33,7 +33,7 @@ async def add_iter(iter_data: IterData):
     return {'code': 200, 'data': iter_list}
 
 
-@router.post('/update_iter')
+@router.put('/update_iter')
 async def update_iter(iter_data: IterData):
     json_data = jsonable_encoder(iter_data)
     json_data['start_date'] = str(json_data['start_date']).replace('T', ' ')

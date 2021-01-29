@@ -107,7 +107,6 @@ def write_to_excel(result: list, name: list, type=1, filename=''):
     :param type: 0：横向，1：竖向
     :return:
     '''
-    print(name, 'ddddd')
     # 创建一个workbook 设置编码
     workbook = xlwt.Workbook(encoding='utf-8')
     # 创建一个worksheet
@@ -126,7 +125,7 @@ def write_to_excel(result: list, name: list, type=1, filename=''):
                 for i in range(len(result[d][0])):  #日期
                     worksheet.write(d * 2, i + 1, label=result[d][0][i])
             for i in range(len(result[d][1])):  #数据
-                worksheet.write(d * 2 + 1, i + 1, label=result[d][1][i])
+                worksheet.write(d * 2 + 1, i + 1, label=int(result[d][1][i]))
     elif type == 1:
         # 设置冻结为真
         worksheet.set_panes_frozen('1')
@@ -138,7 +137,7 @@ def write_to_excel(result: list, name: list, type=1, filename=''):
                 for i in range(len(result[d][0])):  #日期
                     worksheet.write(i + 1, d * 2, label=result[d][0][i])
             for i in range(len(result[d][1])):  #数据
-                worksheet.write(i + 1, d * 2 + 1, label=result[d][1][i], style=style)
+                worksheet.write(i + 1, d * 2 + 1, label=int(result[d][1][i]), style=style)
 
     # 保存
     workbook.save(filename)

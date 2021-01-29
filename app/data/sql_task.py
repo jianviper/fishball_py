@@ -29,7 +29,19 @@ def sql_add_task(task_data):
         db.close()
 
 
-def sql_update_task(task_data: dict):
+def sql_update_task(update_data):
+    try:
+        data = db.query(Task).filter(and_(Task.task_id == update_data['task_id'], Task.is_delete == 0))
+        r = data.first()
+        if r.task_detail != update_data['task_detail']:
+            print(r)
+            data.update({'task_detail': update_data['task_detail']})
+            db.commit()
+    finally:
+        db.close()
+
+
+def sql_update_task1(task_data: dict):
     try:
         data = db.query(Task).filter(and_(Task.iter_id == task_data['task_id'], Task.is_delete == 0))
         r = data.first()
