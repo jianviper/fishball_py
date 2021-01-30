@@ -19,6 +19,7 @@ class MemberData(BaseModel):
     member_id: int = None
     name: str
     job: str
+    number: int = 0
     is_delete: int = 0
 
 

@@ -18,7 +18,7 @@ def get_members():
 
 
 def sql_add_member(m_data):
-    data = Member(name=m_data.name, job=m_data.job, is_delete=m_data.is_delete)
+    data = Member(name=m_data.name, job=m_data.job, number=m_data.number, is_delete=m_data.is_delete)
     try:
         db.add(data)
         db.commit()
