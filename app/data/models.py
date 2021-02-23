@@ -41,6 +41,7 @@ class Task(Base):
     mark = Column(VARCHAR(255))
     status = Column(Integer)
     is_delete = Column(Integer)
+    count = Column(Integer)
 
     def to_json(self):
         dict = self.__dict__
@@ -50,10 +51,9 @@ class Task(Base):
 
     def __repr__(self):
         return "<Task(id=%s,iter_id=%s,iter_name=%s,member_id=%s,member_name=%s,task_detail=%s,task_date=%s," \
-               "target_num=%s," \
-               "get_num=%s,mark=%s,status=%s,is_delete=%s)>" % (
+               "target_num=%s,get_num=%s,mark=%s,status=%s,is_delete=%s,count=%s)>" % (
                    self.task_id, self.iter_id, self.iter_name, self.member_id, self.member_name, self.task_detail,
-                   self.task_date, self.target_num, self.get_num, self.mark, self.status, self.is_delete)
+                   self.task_date, self.target_num, self.get_num, self.mark, self.status, self.is_delete, self.count)
 
 
 class Member(Base):
@@ -69,16 +69,24 @@ class Member(Base):
             self.member_id, self.name, self.job, self.number, self.is_delete)
 
 
-class Iter_member(Base):
-    __tablename__ = 'fish_iter_member'
-    ball_id = Column(Integer, primary_key=True)
+class Fish_ball_record(Base):
+    __tablename__ = 'fish_ball_record'
+    record_id = Column(Integer, primary_key=True)
     iter_id = Column(Integer, ForeignKey('fish_iters.id'))
+    iter_name = Column(VARCHAR(255))
     member_id = Column(Integer, ForeignKey('fish_member.id'))
+    member_name = Column(VARCHAR(20))
+    use_id = Column(Integer)
+    use_detail = Column(VARCHAR(255))
+    use_date = Column(DATE)
     number = Column(Integer)
+    status = Column(Integer)
 
     def __repr__(self):
-        return "<Ball_detail(id=%s,iter_id=%s,member=%s,number=%s)>" % (
-            self.ball_id, self.iter_id, self.member_id, self.number)
+        return "<fish_ball_record(record_id=%s,iter_id=%s,iter_name=%s,member_id=%s,member_name=%s,use_id=%s," \
+               "use_detail=%s,use_date=%s,number=%s,status=%s)>" % (
+                   self.record_id, self.iter_id, self.iter_name, self.member_id, self.member_name, self.use_id,
+                   self.use_detail, self.use_date, self.number, self.status)
 
 
 class User(Base):
@@ -92,3 +100,18 @@ class User(Base):
     def __repr__(self):
         return '<User(user_id=%s,username=%s,password=%s,status=%s,role=%s)>' % (
             self.user_id, self.username, self.password, self.status, self.role)
+
+
+class Used(Base):
+    __tablename__ = 'fish_used'
+    use_id = Column(Integer, primary_key=True)
+    member_id = Column(Integer)
+    member_name = Column(VARCHAR(20))
+    use_detail = Column(VARCHAR(255))
+    use_date = Column(DATE)
+    use_num = Column(Integer)
+    count = Column(Integer)
+
+    def __repr__(self):
+        return '<Used(use_id=%s,member_id=%s,member_name=%s,use_detail=%s,use_date=%s,use_num=%s,count=%s)>' % (
+            self.use_id, self.member_id, self.member_name, self.use_detail, self.use_date, self.use_num, self.count)

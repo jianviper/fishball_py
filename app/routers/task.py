@@ -19,10 +19,10 @@ class Task(BaseModel):
     iter_id: int = None
     iter_name: str
     member_id: int = None
-    member_name: str
-    task_detail: str
+    members: list
+    task_detail: str = None
     task_date: str
-    target_num: str
+    target_num: str = None
     mark: str = None
     status: int = 0
     get_num: int = 0
@@ -32,7 +32,6 @@ class Task(BaseModel):
 @router.post('/add_task')
 async def add_task(task_data: Task):
     d_data = jsonable_encoder(task_data)
-    print(d_data)
     sql_add_task(task_data)
     return {'code': 200}
 
@@ -40,6 +39,7 @@ async def add_task(task_data: Task):
 class TaskUpdate(BaseModel):
     task_id: int
     task_detail: str
+    target_num: int
 
 
 @router.patch('/update_task')
@@ -51,12 +51,20 @@ async def update_task(update_data: TaskUpdate):
 
 @router.delete('/delete_task')
 async def delete_task(task_id):
+    print('task_id:', task_id)
     sql_delete_task(task_id)
     return {'code': 200}
 
 
-@router.get('/complete_task')
-async def complete_task(task_id: int, status: int, member_id: int):
-    print(task_id, status, member_id)
-    data = sql_complete_task(task_id, status, member_id)
+class TaskComplete(BaseModel):
+    member_id: int
+    task_id: int
+    status: int = 0
+    mark: str = None
+
+
+@router.patch('/complete_task')
+async def complete_task(data: TaskComplete):
+    print(jsonable_encoder(data))
+    data = sql_complete_task(data)
     return {'code': 200, 'data': data}

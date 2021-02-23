@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_, func
 from app.data.models import Iters, Task, Member
 from datetime import datetime
-from fastapi.encoders import jsonable_encoder
 from app.data.database import create_db
 
 db: Session = create_db()

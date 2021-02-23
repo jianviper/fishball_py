@@ -2,7 +2,7 @@
 # coding:utf-8
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
-from app.data.models import Member, Task
+from app.data.models import Member, Task, Used
 
 from app.data.database import create_db
 
@@ -18,8 +18,8 @@ def get_members():
 
 
 def sql_add_member(m_data):
-    data = Member(name=m_data.name, job=m_data.job, number=m_data.number, is_delete=m_data.is_delete)
     try:
+        data = Member(name=m_data.name, job=m_data.job, number=m_data.number, is_delete=m_data.is_delete)
         db.add(data)
         db.commit()
     finally:
@@ -47,7 +47,9 @@ def sql_delete_member(member_id):
 
 def sql_get_member_ball_detail(member_id, iter_id):
     try:
-        query = db.query(Task).filter(and_(Task.member_id == member_id, Task.iter_id == iter_id)).all()
-        return query
+        query_add = db.query(Task).filter(and_(Task.member_id == member_id, Task.iter_id == iter_id)).all()
+        # query_reduce = db.query(Used).filter(Used.member_id == member_id).all()
+        # print(query_add, query_reduce)
+        return query_add
     finally:
         db.close()

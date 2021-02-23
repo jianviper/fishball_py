@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import iteration, member, task, login
+from app.routers import iteration, member, task, login, used
 from app.routers.baidu import baiduzhishu
 
 
@@ -15,6 +15,7 @@ def create_app():
     app.include_router(iteration.router, prefix='/api')
     app.include_router(task.router, prefix='/api')
     app.include_router(login.router, prefix='/api')
+    app.include_router(used.router, prefix='/api')
     app.include_router(baiduzhishu.router)
 
     origins = ["http://localhost",
