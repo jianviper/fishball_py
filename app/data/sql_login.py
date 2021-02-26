@@ -13,10 +13,11 @@ def sql_login(username, password):
     try:
         query = db.query(User).filter(and_(User.username == username, User.password == password)).first()
         print(query)
+        m_id = query.user_id
         if query:
-            return {'code': 200}
+            return m_id
         else:
-            return {'code': 400, 'msg': '账号或密码错误!'}
+            return False
     finally:
         db.close()
 

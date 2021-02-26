@@ -9,9 +9,13 @@ from app.data.database import create_db
 db: Session = create_db()
 
 
-def sql_get_task():
+def sql_get_task(iter_id=None):
     try:
-        r = db.query(Task).filter(Task.is_delete == 0).order_by(desc(Task.task_date)).all()
+        if iter_id:
+            r = db.query(Task).filter(and_(Task.iter_id == iter_id, Task.is_delete == 0)).order_by(
+                desc(Task.task_date)).all()
+        else:
+            r = db.query(Task).filter(Task.is_delete == 0).order_by(desc(Task.task_date)).all()
         return r
     finally:
         db.close()

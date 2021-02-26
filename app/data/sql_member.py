@@ -19,9 +19,13 @@ def get_members():
 
 def sql_add_member(m_data):
     try:
-        data = Member(name=m_data.name, job=m_data.job, number=m_data.number, is_delete=m_data.is_delete)
-        db.add(data)
-        db.commit()
+        r = db.query(Member).filter(and_(Member.is_delete == 0, Member.name == m_data.name)).all()
+        if r:
+            return False
+        else:
+            data = Member(name=m_data.name, job=m_data.job, number=m_data.number, is_delete=m_data.is_delete)
+            db.add(data)
+            db.commit()
     finally:
         db.close()
 

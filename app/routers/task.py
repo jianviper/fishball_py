@@ -9,8 +9,8 @@ router = APIRouter()
 
 
 @router.get('/task')
-async def get_task():
-    data = sql_get_task()
+async def get_task(iter_id: int = None):
+    data = sql_get_task(iter_id)
     return data
 
 
@@ -63,7 +63,7 @@ class TaskComplete(BaseModel):
     mark: str = None
 
 
-@router.patch('/complete_task')
+@router.post('/complete_task')
 async def complete_task(data: TaskComplete):
     print(jsonable_encoder(data))
     data = sql_complete_task(data)

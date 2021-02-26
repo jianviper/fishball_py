@@ -2,6 +2,8 @@
 # coding:utf-8
 from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
+from starlette.responses import JSONResponse
+from starlette import status
 
 from pydantic import BaseModel
 from app.data.sql_member import *
@@ -11,8 +13,8 @@ router = APIRouter()
 
 @router.get('/member')
 async def get_member():
-    data = get_members()
-    return data
+    data = jsonable_encoder(get_members())
+    return JSONResponse(data, status.HTTP_200_OK)
 
 
 class MemberData(BaseModel):
@@ -25,7 +27,11 @@ class MemberData(BaseModel):
 
 @router.post('/add_member')
 async def add_member(member_data: MemberData):
-    sql_add_member(member_data)
+    result = sql_add_member(member_data)
+    if result:
+        return JSONResponse({'msg': '添加成功'}, status.HTTP_201_CREATED)
+    else:
+        return JSONResponse({'msg': '用户已存在,请勿重复添加.'}, status.HTTP_200_OK)
 
 
 @router.post('/update_member')

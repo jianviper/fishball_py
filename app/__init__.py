@@ -3,7 +3,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import iteration, member, task, login, used
+from app.routers import iteration, member, task, used
+from app.routers.login import login
 from app.routers.baidu import baiduzhishu
 
 
