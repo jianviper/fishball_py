@@ -23,7 +23,9 @@ async def login(user_data: Users):
     if result:
         setting = Setting()
         token = create_access_token(result, timedelta(minutes=setting.ACCESS_TOKEN_EXPIRE_MINUTES))
-        return {'code': 200, 'data': {'token': token}}
+        return JSONResponse({'msg': '登录成功', 'token': token}, status.HTTP_200_OK)
+    else:
+        return JSONResponse({'msg': '账号或密码错误，请重试'}, status.HTTP_200_OK)
 
 
 @router.get("/user/info", summary="获取用户信息")
